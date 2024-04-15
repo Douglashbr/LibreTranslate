@@ -5,7 +5,7 @@ kind: ConfigMap
 metadata:
   name: libretranslate-config
 data:
-# list loaded languages or leave empty to load all
+  # list loaded languages or leave empty to load all
   langs: "es,de,it,en,fr,cs,da,nl,hu,pl,pt,sk,ru,tr,uk,fi,eo"
   ltapikey: "yoursecretapikey"
 ---
@@ -23,25 +23,25 @@ spec:
         app: libretranslate
     spec:
       containers:
-      - name: libretranslate
-        image: libretranslate/libretranslate:latest
-        resources:
-          limits:
-            memory: "1Gi"
-            cpu: "500m"
-        ports:
-        - containerPort: 5000
-        env:
-        - name: "LT_LOAD_ONLY"
-          valueFrom:
-            configMapKeyRef:
-              name: libretranslate-config
-              key: langs
-        - name: "TRANSLATE_KEY"
-          valueFrom:
-            configMapKeyRef:
-              name: libretranslate-config
-              key: ltapikey
+        - name: libretranslate
+          image: libretranslate/libretranslate:latest
+          resources:
+            limits:
+              memory: "1Gi"
+              cpu: "500m"
+          ports:
+            - containerPort: 443
+          env:
+            - name: "LT_LOAD_ONLY"
+              valueFrom:
+                configMapKeyRef:
+                  name: libretranslate-config
+                  key: langs
+            - name: "TRANSLATE_KEY"
+              valueFrom:
+                configMapKeyRef:
+                  name: libretranslate-config
+                  key: ltapikey
 ---
 apiVersion: v1
 kind: Service
@@ -52,8 +52,8 @@ spec:
   selector:
     app: libretranslate
   ports:
-  - port: 5000
-    targetPort: 5000
+    - port: 443
+      targetPort: 443
 
 ---
 apiVersion: networking.k8s.io/v1
@@ -68,17 +68,17 @@ metadata:
     app: libretranslate
 spec:
   tls:
-  - hosts:
-    - libretranslate.mydomain.net
-    secretName: libretranslate-mydomain-net
+    - hosts:
+        - libretranslate.mydomain.net
+      secretName: libretranslate-mydomain-net
   rules:
-  - host: libretranslate.mydomain.net
-    http:
-      paths:
-      - backend:
-          service:
-            name: libretranslate-svc
-            port:
-              number: 5000
-        path: /
-        pathType: Prefix
+    - host: libretranslate.mydomain.net
+      http:
+        paths:
+          - backend:
+              service:
+                name: libretranslate-svc
+                port:
+                  number: 443
+            path: /
+            pathType: Prefix

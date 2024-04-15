@@ -22,9 +22,9 @@ const res = await fetch("https://libretranslate.com/translate", {
   body: JSON.stringify({
     q: "Hello!",
     source: "en",
-    target: "es"
+    target: "es",
   }),
-  headers: { "Content-Type": "application/json" }
+  headers: { "Content-Type": "application/json" },
 });
 
 console.log(await res.json());
@@ -48,9 +48,9 @@ const res = await fetch("https://libretranslate.com/translate", {
   body: JSON.stringify({
     q: "Ciao!",
     source: "auto",
-    target: "en"
+    target: "en",
   }),
-  headers: { "Content-Type": "application/json" }
+  headers: { "Content-Type": "application/json" },
 });
 
 console.log(await res.json());
@@ -79,9 +79,9 @@ const res = await fetch("https://libretranslate.com/translate", {
     q: '<p class="green">Hello!</p>',
     source: "en",
     target: "es",
-    format: "html"
+    format: "html",
   }),
-  headers: { "Content-Type": "application/json" }
+  headers: { "Content-Type": "application/json" },
 });
 
 console.log(await res.json());
@@ -106,7 +106,7 @@ pip install libretranslate
 libretranslate [args]
 ```
 
-Then open a web browser to <http://localhost:5000>
+Then open a web browser to <http://localhost:443>
 
 On Ubuntu 20.04 you can also use the install script available at <https://github.com/argosopentech/LibreTranslate-init>
 
@@ -150,25 +150,25 @@ Arguments passed to the process or set via environment variables are split into 
 
 ### Settings / Flags
 
-| Argument                    | Description                                                                                                 | Default Setting      | Env. name                    |
-|-----------------------------|-------------------------------------------------------------------------------------------------------------| -------------------- |------------------------------|
-| --debug                     | Enable debug environment                                                                                    | `Disabled`           | LT_DEBUG                     |
-| --ssl                       | Whether to enable SSL                                                                                       | `Disabled`               | LT_SSL                       |
-| --api-keys                  | Enable API keys database for per-client rate limits when --req-limit is reached                             | `Don't use API keys` | LT_API_KEYS                  |
+| Argument                    | Description                                                                                                 | Default Setting                    | Env. name                    |
+| --------------------------- | ----------------------------------------------------------------------------------------------------------- | ---------------------------------- | ---------------------------- |
+| --debug                     | Enable debug environment                                                                                    | `Disabled`                         | LT_DEBUG                     |
+| --ssl                       | Whether to enable SSL                                                                                       | `Disabled`                         | LT_SSL                       |
+| --api-keys                  | Enable API keys database for per-client rate limits when --req-limit is reached                             | `Don't use API keys`               | LT_API_KEYS                  |
 | --require-api-key-origin    | Require use of an API key for programmatic access to the API, unless the request origin matches this domain | `No restrictions on domain origin` | LT_REQUIRE_API_KEY_ORIGIN    |
-| --require-api-key-secret    | Require use of an API key for programmatic access to the API, unless the client also sends a secret match   | `No secrets required` | LT_REQUIRE_API_KEY_SECRET    |
-| --suggestions               | Allow user suggestions                                                                                      | `Disabled`    | LT_SUGGESTIONS               |
-| --disable-files-translation | Disable files translation                                                                                   | `File translation allowed`    | LT_DISABLE_FILES_TRANSLATION |
-| --disable-web-ui            | Disable web ui                                                                                              | `Web Ui enabled`    | LT_DISABLE_WEB_UI            |
-| --update-models             | Update language models at startup                                                                           | `Only on if no models found`    | LT_UPDATE_MODELS            |
-| --metrics                   | Enable the /metrics endpoint for exporting [Prometheus](https://prometheus.io/) usage metrics               | `Disabled`    | LT_METRICS            |
+| --require-api-key-secret    | Require use of an API key for programmatic access to the API, unless the client also sends a secret match   | `No secrets required`              | LT_REQUIRE_API_KEY_SECRET    |
+| --suggestions               | Allow user suggestions                                                                                      | `Disabled`                         | LT_SUGGESTIONS               |
+| --disable-files-translation | Disable files translation                                                                                   | `File translation allowed`         | LT_DISABLE_FILES_TRANSLATION |
+| --disable-web-ui            | Disable web ui                                                                                              | `Web Ui enabled`                   | LT_DISABLE_WEB_UI            |
+| --update-models             | Update language models at startup                                                                           | `Only on if no models found`       | LT_UPDATE_MODELS             |
+| --metrics                   | Enable the /metrics endpoint for exporting [Prometheus](https://prometheus.io/) usage metrics               | `Disabled`                         | LT_METRICS                   |
 
 ### Configuration Parameters
 
 | Argument                   | Description                                                                                                                                                                                                 | Default Parameter                     | Env. name                   |
 | -------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------- | --------------------------- |
 | --host                     | Set host to bind the server to                                                                                                                                                                              | `127.0.0.1`                           | LT_HOST                     |
-| --port                     | Set port to bind the server to                                                                                                                                                                              | `5000`                                | LT_PORT                     |
+| --port                     | Set port to bind the server to                                                                                                                                                                              | `443`                                 | LT_PORT                     |
 | --char-limit               | Set character limit                                                                                                                                                                                         | `No limit`                            | LT_CHAR_LIMIT               |
 | --req-limit                | Set maximum number of requests per minute per client (outside of limits set by api keys)                                                                                                                    | `No limit`                            | LT_REQ_LIMIT                |
 | --req-limit-storage        | Storage URI to use for request limit data storage. See [Flask Limiter](https://flask-limiter.readthedocs.io/en/stable/configuration.html)                                                                   | `memory://`                           | LT_REQ_LIMIT_STORAGE        |
@@ -185,7 +185,7 @@ Arguments passed to the process or set via environment variables are split into 
 | --load-only                | Set available languages                                                                                                                                                                                     | `Empty (use all from argostranslate)` | LT_LOAD_ONLY                |
 | --threads                  | Set number of threads                                                                                                                                                                                       | `4`                                   | LT_THREADS                  |
 | --metrics-auth-token       | Protect the /metrics endpoint by allowing only clients that have a valid Authorization Bearer token                                                                                                         | `Empty (no auth required)`            | LT_METRICS_AUTH_TOKEN       |
-| --url-prefix               | Add prefix to URL: example.com:5000/url-prefix/                                                                                                                                                             | `/`                                   | LT_URL_PREFIX               |
+| --url-prefix               | Add prefix to URL: example.com:443/url-prefix/                                                                                                                                                              | `/`                                   | LT_URL_PREFIX               |
 
 ### Notes:
 
@@ -217,13 +217,13 @@ Alternatively you can also run the `scripts/install_models.py` script.
 
 ```bash
 pip install gunicorn
-gunicorn --bind 0.0.0.0:5000 'wsgi:app'
+gunicorn --bind 0.0.0.0:443 'wsgi:app'
 ```
 
 You can pass application arguments directly to Gunicorn via:
 
 ```bash
-gunicorn --bind 0.0.0.0:5000 'wsgi:app(api_keys=True)'
+gunicorn --bind 0.0.0.0:443 'wsgi:app(api_keys=True)'
 ```
 
 ## Kubernetes Deployment
@@ -263,7 +263,7 @@ ltmanage keys add 120
 To issue a new API key with 120 requests per minute and a maximum of 5,000 characters per request:
 
 ```bash
-ltmanage keys add 120 --char-limit 5000
+ltmanage keys add 120 --char-limit 443
 ```
 
 If you changed the API keys database path:
@@ -288,7 +288,7 @@ ltmanage keys
 
 LibreTranslate has Prometheus [exporter](https://prometheus.io/docs/instrumenting/exporters/) capabilities when you pass the `--metrics` argument at startup (disabled by default). When metrics are enabled, a `/metrics` endpoint is mounted on the instance:
 
-<http://localhost:5000/metrics>
+<http://localhost:443/metrics>
 
 ```promql
 # HELP libretranslate_http_requests_in_flight Multiprocess metric
@@ -308,10 +308,10 @@ scrape_configs:
 
     # Needed only if you use --metrics-auth-token
     #authorization:
-      #credentials: "mytoken"
+    #credentials: "mytoken"
 
     static_configs:
-      - targets: ["localhost:5000"]
+      - targets: ["localhost:443"]
 ```
 
 To secure the `/metrics` endpoint you can also use `--metrics-auth-token mytoken`.
@@ -322,7 +322,7 @@ If you use Gunicorn, make sure to create a directory for storing multiprocess da
 mkdir -p /tmp/prometheus_data
 rm /tmp/prometheus_data/*
 export PROMETHEUS_MULTIPROC_DIR=/tmp/prometheus_data
-gunicorn -c scripts/gunicorn_conf.py --bind 0.0.0.0:5000 'wsgi:app(metrics=True)'
+gunicorn -c scripts/gunicorn_conf.py --bind 0.0.0.0:443 'wsgi:app(metrics=True)'
 ```
 
 ## Language Bindings
@@ -379,25 +379,26 @@ See it in action on this [page](https://community.libretranslate.com/t/have-you-
 
 This is a list of public LibreTranslate instances, some require an API key. If you want to add a new URL, please open a pull request.
 
-URL |API Key Required | Links
---- | --- | ---
-[libretranslate.com](https://libretranslate.com)|:heavy_check_mark:|[ [Get API Key](https://portal.libretranslate.com) ] [ [Service Status](https://status.libretranslate.com/) ]
-[translate.terraprint.co](https://translate.terraprint.co/)|-
-[trans.zillyhuhn.com](https://trans.zillyhuhn.com/)|-
-[libretranslate.eownerdead.dedyn.io](https://libretranslate.eownerdead.dedyn.io)|-
+| URL                                                                              | API Key Required   | Links                                                                                                         |
+| -------------------------------------------------------------------------------- | ------------------ | ------------------------------------------------------------------------------------------------------------- |
+| [libretranslate.com](https://libretranslate.com)                                 | :heavy_check_mark: | [ [Get API Key](https://portal.libretranslate.com) ] [ [Service Status](https://status.libretranslate.com/) ] |
+| [translate.terraprint.co](https://translate.terraprint.co/)                      | -                  |
+| [trans.zillyhuhn.com](https://trans.zillyhuhn.com/)                              | -                  |
+| [libretranslate.eownerdead.dedyn.io](https://libretranslate.eownerdead.dedyn.io) | -                  |
 
 ## TOR/i2p Mirrors
 
-URL |
---- |
-[lt.vernccvbvyi5qhfzyqengccj7lkove6bjot2xhh5kajhwvidqafczrad.onion](http://lt.vernccvbvyi5qhfzyqengccj7lkove6bjot2xhh5kajhwvidqafczrad.onion/)|
-[lt.vern.i2p](http://vernf45n7mxwqnp5riaax7p67pwcl7wcefdcnqqvim7ckdx4264a.b32.i2p/)|
+| URL                                                                                                                                            |
+| ---------------------------------------------------------------------------------------------------------------------------------------------- |
+| [lt.vernccvbvyi5qhfzyqengccj7lkove6bjot2xhh5kajhwvidqafczrad.onion](http://lt.vernccvbvyi5qhfzyqengccj7lkove6bjot2xhh5kajhwvidqafczrad.onion/) |
+| [lt.vern.i2p](http://vernf45n7mxwqnp5riaax7p67pwcl7wcefdcnqqvim7ckdx4264a.b32.i2p/)                                                            |
 
 ## Adding New Language Models
 
 You have two options to create new language models:
- * [Locomotive](https://github.com/LibreTranslate/Locomotive)
- * [Argos Train](https://github.com/argosopentech/argos-train) ([video tutorial](https://www.youtube.com/watch?v=Vj_qgnhOEwg))
+
+- [Locomotive](https://github.com/LibreTranslate/Locomotive)
+- [Argos Train](https://github.com/argosopentech/argos-train) ([video tutorial](https://www.youtube.com/watch?v=Vj_qgnhOEwg))
 
 Most of the training data is from [Opus](http://opus.nlpl.eu/), which is an open source parallel corpus. Check also [NLLU](https://nllu.libretranslate.com)
 
@@ -410,50 +411,50 @@ To help improve or review the UI translations:
 - Go to <https://hosted.weblate.org/projects/libretranslate/app/#translations>. All changes are automatically pushed to this repository.
 - Once all strings have been reviewed/edited, open a pull request and change `libretranslate/locales/{code}/meta.json`:
 
- ```json
+```json
 {
-  "name": "<Language>",
-  "reviewed": true <-- Change this from false to true
+ "name": "<Language>",
+ "reviewed": true <-- Change this from false to true
 }
- ```
+```
 
 ### UI Languages
 
-Language | Reviewed | Weblate Link
--------- | -------- | ------------
-Arabic |  | [Edit](https://hosted.weblate.org/translate/libretranslate/app/ar/)
-Azerbaijani |  | [Edit](https://hosted.weblate.org/translate/libretranslate/app/az/)
-Chinese |  | [Edit](https://hosted.weblate.org/translate/libretranslate/app/zh/)
-Chinese (Traditional) |  | [Edit](https://hosted.weblate.org/translate/libretranslate/app/zh_Hant/)
-Czech | :heavy_check_mark: | [Edit](https://hosted.weblate.org/translate/libretranslate/app/cs/)
-Danish |  | [Edit](https://hosted.weblate.org/translate/libretranslate/app/da/)
-Dutch |  | [Edit](https://hosted.weblate.org/translate/libretranslate/app/nl/)
-English | :heavy_check_mark: | [Edit](https://hosted.weblate.org/projects/libretranslate/app/)
-Esperanto | :heavy_check_mark: | [Edit](https://hosted.weblate.org/translate/libretranslate/app/eo/)
-Finnish |  | [Edit](https://hosted.weblate.org/translate/libretranslate/app/fi/)
-French | :heavy_check_mark: | [Edit](https://hosted.weblate.org/translate/libretranslate/app/fr/)
-German | :heavy_check_mark: | [Edit](https://hosted.weblate.org/translate/libretranslate/app/de/)
-Greek |  | [Edit](https://hosted.weblate.org/translate/libretranslate/app/el/)
-Hebrew |  | [Edit](https://hosted.weblate.org/translate/libretranslate/app/he/)
-Hindi |  | [Edit](https://hosted.weblate.org/translate/libretranslate/app/hi/)
-Hungarian |  | [Edit](https://hosted.weblate.org/translate/libretranslate/app/hu/)
-Indonesian |  | [Edit](https://hosted.weblate.org/translate/libretranslate/app/id/)
-Irish |  | [Edit](https://hosted.weblate.org/translate/libretranslate/app/ga/)
-Italian | :heavy_check_mark: | [Edit](https://hosted.weblate.org/translate/libretranslate/app/it/)
-Japanese |  | [Edit](https://hosted.weblate.org/translate/libretranslate/app/ja/)
-Kabyle |  | [Edit](https://hosted.weblate.org/projects/libretranslate/app/kab/)
-Korean | :heavy_check_mark: | [Edit](https://hosted.weblate.org/translate/libretranslate/app/ko/)
-Occitan |  | [Edit](https://hosted.weblate.org/translate/libretranslate/app/oc/)
-Persian |  | [Edit](https://hosted.weblate.org/translate/libretranslate/app/fa/)
-Polish |  | [Edit](https://hosted.weblate.org/translate/libretranslate/app/pl/)
-Portuguese | :heavy_check_mark: | [Edit](https://hosted.weblate.org/translate/libretranslate/app/pt/)
-Russian | :heavy_check_mark: | [Edit](https://hosted.weblate.org/translate/libretranslate/app/ru/)
-Slovak |  | [Edit](https://hosted.weblate.org/translate/libretranslate/app/sk/)
-Spanish | :heavy_check_mark: | [Edit](https://hosted.weblate.org/translate/libretranslate/app/es/)
-Swedish |  | [Edit](https://hosted.weblate.org/translate/libretranslate/app/sv/)
-Turkish |  | [Edit](https://hosted.weblate.org/translate/libretranslate/app/tr/)
-Ukranian | :heavy_check_mark: | [Edit](https://hosted.weblate.org/translate/libretranslate/app/uk/)
-Vietnamese |  | [Edit](https://hosted.weblate.org/translate/libretranslate/app/vi/)
+| Language              | Reviewed           | Weblate Link                                                             |
+| --------------------- | ------------------ | ------------------------------------------------------------------------ |
+| Arabic                |                    | [Edit](https://hosted.weblate.org/translate/libretranslate/app/ar/)      |
+| Azerbaijani           |                    | [Edit](https://hosted.weblate.org/translate/libretranslate/app/az/)      |
+| Chinese               |                    | [Edit](https://hosted.weblate.org/translate/libretranslate/app/zh/)      |
+| Chinese (Traditional) |                    | [Edit](https://hosted.weblate.org/translate/libretranslate/app/zh_Hant/) |
+| Czech                 | :heavy_check_mark: | [Edit](https://hosted.weblate.org/translate/libretranslate/app/cs/)      |
+| Danish                |                    | [Edit](https://hosted.weblate.org/translate/libretranslate/app/da/)      |
+| Dutch                 |                    | [Edit](https://hosted.weblate.org/translate/libretranslate/app/nl/)      |
+| English               | :heavy_check_mark: | [Edit](https://hosted.weblate.org/projects/libretranslate/app/)          |
+| Esperanto             | :heavy_check_mark: | [Edit](https://hosted.weblate.org/translate/libretranslate/app/eo/)      |
+| Finnish               |                    | [Edit](https://hosted.weblate.org/translate/libretranslate/app/fi/)      |
+| French                | :heavy_check_mark: | [Edit](https://hosted.weblate.org/translate/libretranslate/app/fr/)      |
+| German                | :heavy_check_mark: | [Edit](https://hosted.weblate.org/translate/libretranslate/app/de/)      |
+| Greek                 |                    | [Edit](https://hosted.weblate.org/translate/libretranslate/app/el/)      |
+| Hebrew                |                    | [Edit](https://hosted.weblate.org/translate/libretranslate/app/he/)      |
+| Hindi                 |                    | [Edit](https://hosted.weblate.org/translate/libretranslate/app/hi/)      |
+| Hungarian             |                    | [Edit](https://hosted.weblate.org/translate/libretranslate/app/hu/)      |
+| Indonesian            |                    | [Edit](https://hosted.weblate.org/translate/libretranslate/app/id/)      |
+| Irish                 |                    | [Edit](https://hosted.weblate.org/translate/libretranslate/app/ga/)      |
+| Italian               | :heavy_check_mark: | [Edit](https://hosted.weblate.org/translate/libretranslate/app/it/)      |
+| Japanese              |                    | [Edit](https://hosted.weblate.org/translate/libretranslate/app/ja/)      |
+| Kabyle                |                    | [Edit](https://hosted.weblate.org/projects/libretranslate/app/kab/)      |
+| Korean                | :heavy_check_mark: | [Edit](https://hosted.weblate.org/translate/libretranslate/app/ko/)      |
+| Occitan               |                    | [Edit](https://hosted.weblate.org/translate/libretranslate/app/oc/)      |
+| Persian               |                    | [Edit](https://hosted.weblate.org/translate/libretranslate/app/fa/)      |
+| Polish                |                    | [Edit](https://hosted.weblate.org/translate/libretranslate/app/pl/)      |
+| Portuguese            | :heavy_check_mark: | [Edit](https://hosted.weblate.org/translate/libretranslate/app/pt/)      |
+| Russian               | :heavy_check_mark: | [Edit](https://hosted.weblate.org/translate/libretranslate/app/ru/)      |
+| Slovak                |                    | [Edit](https://hosted.weblate.org/translate/libretranslate/app/sk/)      |
+| Spanish               | :heavy_check_mark: | [Edit](https://hosted.weblate.org/translate/libretranslate/app/es/)      |
+| Swedish               |                    | [Edit](https://hosted.weblate.org/translate/libretranslate/app/sv/)      |
+| Turkish               |                    | [Edit](https://hosted.weblate.org/translate/libretranslate/app/tr/)      |
+| Ukranian              | :heavy_check_mark: | [Edit](https://hosted.weblate.org/translate/libretranslate/app/uk/)      |
+| Vietnamese            |                    | [Edit](https://hosted.weblate.org/translate/libretranslate/app/vi/)      |
 
 ## Roadmap
 
@@ -483,10 +484,10 @@ In `$HOME/.local/share/argos-translate/packages`. On Windows that's `C:\Users\yo
 Yes, here are config examples for Apache2 and Caddy that redirect a subdomain (with HTTPS certificate) to LibreTranslate running on a docker at localhost.
 
 ```bash
-sudo docker run -ti --rm -p 127.0.0.1:5000:5000 libretranslate/libretranslate
+sudo docker run -ti --rm -p 127.0.0.1:443:443 libretranslate/libretranslate
 ```
 
-You can remove `127.0.0.1` on the above command if you want to be able to access it from `domain.tld:5000`, in addition to `subdomain.domain.tld` (this can be helpful to determine if there is an issue with Apache2 or the docker container).
+You can remove `127.0.0.1` on the above command if you want to be able to access it from `domain.tld:443`, in addition to `subdomain.domain.tld` (this can be helpful to determine if there is an issue with Apache2 or the docker container).
 
 Add `--restart unless-stopped` if you want this docker to start on boot, unless manually stopped.
 
@@ -513,8 +514,8 @@ Remove `#` on the ErrorLog and CustomLog lines to log requests.
 <VirtualHost *:443>
     ServerName https://[YOUR_DOMAIN]
 
-    ProxyPass / http://127.0.0.1:5000/
-    ProxyPassReverse / http://127.0.0.1:5000/
+    ProxyPass / http://127.0.0.1:443/
+    ProxyPassReverse / http://127.0.0.1:443/
     ProxyPreserveHost On
 
     SSLEngine on
@@ -530,6 +531,7 @@ Remove `#` on the ErrorLog and CustomLog lines to log requests.
 Add this to an existing site config, or a new file in `/etc/apache2/sites-available/new-site.conf` and run `sudo a2ensite new-site.conf`.
 
 To get a HTTPS subdomain certificate, install `certbot` (snap), run `sudo certbot certonly --manual --preferred-challenges dns` and enter your information (with `subdomain.domain.tld` as the domain). Add a DNS TXT record with your domain registrar when asked. This will save your certificate and key to `/etc/letsencrypt/live/{subdomain.domain.tld}/`. Alternatively, comment the SSL lines out if you don't want to use HTTPS.
+
 </details>
 
 <details>
@@ -541,7 +543,7 @@ Replace [YOUR_DOMAIN] with your full domain; for example, `translate.domain.tld`
 ```Caddyfile
 #Libretranslate
 [YOUR_DOMAIN] {
-  reverse_proxy localhost:5000
+  reverse_proxy localhost:443
 }
 ```
 
@@ -623,7 +625,7 @@ server {
   gzip_types text/xml text/javascript font/ttf font/eot font/otf application/x-javascript application/atom+xml application/javascript application/json application/manifest+json application/rss+xml application/x-web-app-manifest+json application/xhtml+xml application/xml image/svg+xml image/x-icon text/css text/plain;
 
   location / {
-      proxy_pass http://127.0.0.1:5000/;
+      proxy_pass http://127.0.0.1:443/;
       proxy_set_header Host $http_host;
       proxy_set_header X-Real-IP $remote_addr;
       proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
@@ -648,9 +650,9 @@ const res = await fetch("https://libretranslate.com/translate", {
   body: JSON.stringify({
     q: ["Hello", "world"],
     source: "en",
-    target: "es"
+    target: "es",
   }),
-  headers: { "Content-Type": "application/json" }
+  headers: { "Content-Type": "application/json" },
 });
 
 console.log(await res.json());
@@ -666,9 +668,9 @@ console.log(await res.json());
 
 We welcome contributions! Here's some ideas:
 
-* Train a new language model using [Locomotive](https://github.com/LibreTranslate/Locomotive). For example, we want to train improved neural networks for [German](https://community.libretranslate.com/t/help-wanted-improve-en-de-translation/935) and many other languages.
-* Can you beat the performance of our language models? Train a new one and let's compare it. To submit your model make a post on the [community forum](https://community.libretranslate.com/) with a link to download your .argosmodel file and some sample text that your model has translated.
-* Pick an [issue](https://github.com/LibreTranslate/LibreTranslate/issues) to work on.
+- Train a new language model using [Locomotive](https://github.com/LibreTranslate/Locomotive). For example, we want to train improved neural networks for [German](https://community.libretranslate.com/t/help-wanted-improve-en-de-translation/935) and many other languages.
+- Can you beat the performance of our language models? Train a new one and let's compare it. To submit your model make a post on the [community forum](https://community.libretranslate.com/) with a link to download your .argosmodel file and some sample text that your model has translated.
+- Pick an [issue](https://github.com/LibreTranslate/LibreTranslate/issues) to work on.
 
 ## Credits
 

@@ -4,7 +4,7 @@ If you want to make changes to the code, you can build from source, and run the 
 
 ## Build Dependencies
 
-* cmake
+- cmake
 
 ### Debian / Ubuntu
 
@@ -41,7 +41,7 @@ Run in development:
 hatch run dev --debug
 ```
 
-Then open a web browser to <http://localhost:5000>
+Then open a web browser to <http://localhost:443>
 
 You can also start a new shell in a virtual environment with libretranslate installed:
 
@@ -85,7 +85,7 @@ hatch env prune
 Linux/macOS: `./run.sh [args]`
 Windows: `run.bat [args]`
 
-Then open a web browser to <http://localhost:5000>
+Then open a web browser to <http://localhost:443>
 
 ## Build with Docker
 
@@ -98,7 +98,7 @@ If you want to run the Docker image in a complete offline environment, you need 
 Run the built image:
 
 ```bash
-docker run -it -p 5000:5000 libretranslate [args]
+docker run -it -p 443:443 libretranslate [args]
 ```
 
 Or build and run using Docker Compose:
@@ -133,4 +133,5 @@ This occurs when your operating system depends on and manages Python for core fu
 This prevents pip packages from being installed system-wide. This way, there are no risks of pip packages conflicting between multiple projects or the operating system.
 
 References:
-* [Python venv documentation](https://docs.python.org/library/venv.html)
+
+- [Python venv documentation](https://docs.python.org/library/venv.html)
