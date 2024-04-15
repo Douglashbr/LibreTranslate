@@ -106,7 +106,7 @@ pip install libretranslate
 libretranslate [args]
 ```
 
-Then open a web browser to <http://localhost:443>
+Then open a web browser to <http://localhost:5000>
 
 On Ubuntu 20.04 you can also use the install script available at <https://github.com/argosopentech/LibreTranslate-init>
 
@@ -168,7 +168,7 @@ Arguments passed to the process or set via environment variables are split into 
 | Argument                   | Description                                                                                                                                                                                                 | Default Parameter                     | Env. name                   |
 | -------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------- | --------------------------- |
 | --host                     | Set host to bind the server to                                                                                                                                                                              | `127.0.0.1`                           | LT_HOST                     |
-| --port                     | Set port to bind the server to                                                                                                                                                                              | `443`                                 | LT_PORT                     |
+| --port                     | Set port to bind the server to                                                                                                                                                                              | `5000`                                | LT_PORT                     |
 | --char-limit               | Set character limit                                                                                                                                                                                         | `No limit`                            | LT_CHAR_LIMIT               |
 | --req-limit                | Set maximum number of requests per minute per client (outside of limits set by api keys)                                                                                                                    | `No limit`                            | LT_REQ_LIMIT                |
 | --req-limit-storage        | Storage URI to use for request limit data storage. See [Flask Limiter](https://flask-limiter.readthedocs.io/en/stable/configuration.html)                                                                   | `memory://`                           | LT_REQ_LIMIT_STORAGE        |
@@ -185,7 +185,7 @@ Arguments passed to the process or set via environment variables are split into 
 | --load-only                | Set available languages                                                                                                                                                                                     | `Empty (use all from argostranslate)` | LT_LOAD_ONLY                |
 | --threads                  | Set number of threads                                                                                                                                                                                       | `4`                                   | LT_THREADS                  |
 | --metrics-auth-token       | Protect the /metrics endpoint by allowing only clients that have a valid Authorization Bearer token                                                                                                         | `Empty (no auth required)`            | LT_METRICS_AUTH_TOKEN       |
-| --url-prefix               | Add prefix to URL: example.com:443/url-prefix/                                                                                                                                                              | `/`                                   | LT_URL_PREFIX               |
+| --url-prefix               | Add prefix to URL: example.com:5000/url-prefix/                                                                                                                                                             | `/`                                   | LT_URL_PREFIX               |
 
 ### Notes:
 
@@ -217,13 +217,13 @@ Alternatively you can also run the `scripts/install_models.py` script.
 
 ```bash
 pip install gunicorn
-gunicorn --bind 0.0.0.0:443 'wsgi:app'
+gunicorn --bind 0.0.0.0:5000 'wsgi:app'
 ```
 
 You can pass application arguments directly to Gunicorn via:
 
 ```bash
-gunicorn --bind 0.0.0.0:443 'wsgi:app(api_keys=True)'
+gunicorn --bind 0.0.0.0:5000 'wsgi:app(api_keys=True)'
 ```
 
 ## Kubernetes Deployment
@@ -263,7 +263,7 @@ ltmanage keys add 120
 To issue a new API key with 120 requests per minute and a maximum of 5,000 characters per request:
 
 ```bash
-ltmanage keys add 120 --char-limit 443
+ltmanage keys add 120 --char-limit 5000
 ```
 
 If you changed the API keys database path:
@@ -288,7 +288,7 @@ ltmanage keys
 
 LibreTranslate has Prometheus [exporter](https://prometheus.io/docs/instrumenting/exporters/) capabilities when you pass the `--metrics` argument at startup (disabled by default). When metrics are enabled, a `/metrics` endpoint is mounted on the instance:
 
-<http://localhost:443/metrics>
+<http://localhost:5000/metrics>
 
 ```promql
 # HELP libretranslate_http_requests_in_flight Multiprocess metric
@@ -311,7 +311,7 @@ scrape_configs:
     #credentials: "mytoken"
 
     static_configs:
-      - targets: ["localhost:443"]
+      - targets: ["localhost:5000"]
 ```
 
 To secure the `/metrics` endpoint you can also use `--metrics-auth-token mytoken`.
@@ -322,7 +322,7 @@ If you use Gunicorn, make sure to create a directory for storing multiprocess da
 mkdir -p /tmp/prometheus_data
 rm /tmp/prometheus_data/*
 export PROMETHEUS_MULTIPROC_DIR=/tmp/prometheus_data
-gunicorn -c scripts/gunicorn_conf.py --bind 0.0.0.0:443 'wsgi:app(metrics=True)'
+gunicorn -c scripts/gunicorn_conf.py --bind 0.0.0.0:5000 'wsgi:app(metrics=True)'
 ```
 
 ## Language Bindings
@@ -368,7 +368,7 @@ See it in action on this [page](https://community.libretranslate.com/t/have-you-
 ## Mobile Apps
 
 - [LibreTranslator](https://codeberg.org/BeoCode/LibreTranslator) is an Android app [available on the Play Store](https://play.google.com/store/apps/details?id=de.beowulf.libretranslater) and [in the F-Droid store](https://f-droid.org/packages/de.beowulf.libretranslater/) that uses the LibreTranslate API.
-- [LiTranslate](https://github.com/viktorkalyniuk/LiTranslate-iOS) is an iOS app [available on the App Store](https://apps.apple.com/us/app/litranslate/id1644385339) that uses the LibreTranslate API.
+- [LiTranslate](https://github.com/viktorkalyniuk/LiTranslate-iOS) is an iOS app [available on the App Store](https://apps.apple.com/us/app/litranslate/id16500085339) that uses the LibreTranslate API.
 
 ## Web browser
 
@@ -484,10 +484,10 @@ In `$HOME/.local/share/argos-translate/packages`. On Windows that's `C:\Users\yo
 Yes, here are config examples for Apache2 and Caddy that redirect a subdomain (with HTTPS certificate) to LibreTranslate running on a docker at localhost.
 
 ```bash
-sudo docker run -ti --rm -p 127.0.0.1:443:443 libretranslate/libretranslate
+sudo docker run -ti --rm -p 127.0.0.1:5000:5000 libretranslate/libretranslate
 ```
 
-You can remove `127.0.0.1` on the above command if you want to be able to access it from `domain.tld:443`, in addition to `subdomain.domain.tld` (this can be helpful to determine if there is an issue with Apache2 or the docker container).
+You can remove `127.0.0.1` on the above command if you want to be able to access it from `domain.tld:5000`, in addition to `subdomain.domain.tld` (this can be helpful to determine if there is an issue with Apache2 or the docker container).
 
 Add `--restart unless-stopped` if you want this docker to start on boot, unless manually stopped.
 
@@ -511,11 +511,11 @@ Remove `#` on the ErrorLog and CustomLog lines to log requests.
  </VirtualHost>
 
 #https
-<VirtualHost *:443>
+<VirtualHost *:5000>
     ServerName https://[YOUR_DOMAIN]
 
-    ProxyPass / http://127.0.0.1:443/
-    ProxyPassReverse / http://127.0.0.1:443/
+    ProxyPass / http://127.0.0.1:5000/
+    ProxyPassReverse / http://127.0.0.1:5000/
     ProxyPreserveHost On
 
     SSLEngine on
@@ -543,7 +543,7 @@ Replace [YOUR_DOMAIN] with your full domain; for example, `translate.domain.tld`
 ```Caddyfile
 #Libretranslate
 [YOUR_DOMAIN] {
-  reverse_proxy localhost:443
+  reverse_proxy localhost:5000
 }
 ```
 
@@ -567,7 +567,7 @@ server {
 }
 
 server {
-  listen 443 http2 ssl;
+  listen 5000 http2 ssl;
   server_name [YOUR_DOMAIN];
 
   #access_log off;
@@ -625,7 +625,7 @@ server {
   gzip_types text/xml text/javascript font/ttf font/eot font/otf application/x-javascript application/atom+xml application/javascript application/json application/manifest+json application/rss+xml application/x-web-app-manifest+json application/xhtml+xml application/xml image/svg+xml image/x-icon text/css text/plain;
 
   location / {
-      proxy_pass http://127.0.0.1:443/;
+      proxy_pass http://127.0.0.1:5000/;
       proxy_set_header Host $http_host;
       proxy_set_header X-Real-IP $remote_addr;
       proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
